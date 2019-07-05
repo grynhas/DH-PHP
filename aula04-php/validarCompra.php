@@ -6,7 +6,26 @@
   $cvv = $_REQUEST["cvv"];
   $nomeCurso = $_REQUEST["nomeCurso"];
   $precoCurso = $_REQUEST["precoCurso"];
+
+  function validaNome($nomeCompleto){
+    return strlen($nomeCompleto) > 0 && strlen($nomeCompleto) <= 15;
+  }
+  function validaCpf($cpf){
+
+   return strlen($cpf) === 11;
+  }
+    function validaCartao($numeroCartao){
+      return substr($numeroCartao, -4);
+   }
+   function validaCvv($cvv){
+     return strlen($cvv) === 3;
+   }
+   echo "A" . validaNome($nomeCompleto). "<br>";
+   echo "B". validaCpf($cpf). "<br>";
+   echo "C". validaCartao($numeroCartao). "<br>";
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
