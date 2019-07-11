@@ -9,6 +9,9 @@
   $nomeCurso = $_REQUEST["nomeCurso"];
   $precoCurso = $_REQUEST["precoCurso"];
 
+  //arrey
+$errors = [];
+
   // função para validar se nome foi preenchido e possui menos de 15 caracteres
   function validaNome($nomeCompleto){
     return strlen($nomeCompleto) > 0 && strlen($nomeCompleto) <= 15;
@@ -30,6 +33,33 @@
   function validaCvv($cvv){
     return strlen($cvv) === 3;
   }
+  
+  // função para valifar a validade 
+  function validaData($validade){
+    $dataAtual = date('Y-m');
+    return $validade > $dataAtual;
+  }
+  function validarCompra($nome, $cpf, $numeroCartao, $cvv, $validade ){
+    global $errors;
+    if(!validaNome($nome)){
+      arrey_push($errors, 'nome completo é obrigatorio');
+    }
+    if(!validaNome($cpf)){
+      arrey_push($errors, 'CPF invalido');
+    }
+    if(!validaNroCartao($numeroCartao)){
+      array_push($errors, 'Numero cartao invalido');
+    }
+    if(!validaCvv($cvv)){
+      array_push($errors, 'Cvv invalido');
+    }
+    if(!validaData($validade)){
+      array_push($errors, 'validade não condiz');
+    }
+
+  }
+   validarCompra($nomeCompleto, $cpf, $numeroCartao, $cvv, $validade);
+
 
 ?>
 
@@ -46,6 +76,28 @@
   <body>
     <div class="container">
       <div class="col-md-6 col-md-offset-3">
+        <?php if(count($errors) > 0): ?>
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+              <span>
+                preencha seus dados corretamente.
+              </span>
+            </div>
+            <div class="panel-body">
+              <ul class="list-group">
+                <?php foreach($errors as $key => $value):?>
+                  <li>
+                    <?= $value; ?>
+                  </li>
+                 <?php endforeach; ?>
+              </ul>
+              <div class="center">
+                <a href="index.php">Voltar para home</a>
+              </div>
+            </div>
+          </div>
+      <? else: ?>
+
         <div class="panel panel-primary">
           <div class="panel-heading">Compra Realizada com sucesso!</div>
           <div class="panel-body">
@@ -59,6 +111,7 @@
             </div>
           </div>
         </div>
+        <?php endif; ?>
       </div>
     </div>
   </body>
